@@ -1,0 +1,91 @@
+.bx-soa-pp-company.bx-soa-pp-company--hascalculate .bx-soa-pp-delivery-cost,
+.bx-soa-pp-company.bx-soa-pp-company--hascalculate .bx-soa-pp-delivery-period,
+.bx-soa-pp-company.bx-soa-pp-company--hascalculate .bx-soa-pp-delivery-calculate > .bx-soa-pp-list-termin {
+    display: none !important;
+}
+
+#popup-window-overlay-bx-salesbeat-widget,
+#popup-window-overlay-bx-salesbeat-pvz {
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+#bx-salesbeat-widget,
+#bx-salesbeat-pvz {
+    position: fixed !important;
+    background-color: transparent !important;
+    max-width: 700px !important;
+    width: 100% !important;
+    height: auto !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 20px !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    z-index: 5000 !important;
+}
+
+#bx-salesbeat-widget .popup-window-close-icon,
+#bx-salesbeat-pvz .popup-window-close-icon {
+    background-color: #fff;
+    width: 30px;
+    height: 30px;
+    top: 0;
+    right: -30px;
+    opacity: 1;
+}
+
+#bx-salesbeat-widget .popup-window-close-icon:hover,
+#bx-salesbeat-pvz .popup-window-close-icon:hover {
+    opacity: .9;
+}
+
+#popup-window-content-bx-salesbeat-widget,
+#popup-window-content-bx-salesbeat-pvz {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 15px !important;
+}
+
+#sb-cart-pvz-map2 {
+    height: 50vh;
+}
+
+@media only screen and (max-width: 768px) {
+    #bx-salesbeat-widget,
+    #bx-salesbeat-pvz {
+        max-width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 10px !important;
+    }
+
+    #bx-salesbeat-widget .popup-window-close-icon,
+    #bx-salesbeat-pvz .popup-window-close-icon {
+        top: 11px;
+        right: 11px;
+        border-left: 1px solid #c1c1c1c1;
+        border-bottom: 1px solid #c1c1c1c1;
+    }
+
+    #popup-window-content-bx-salesbeat-widget,
+    #popup-window-content-bx-salesbeat-pvz {
+        border: 1px solid #c1c1c1c1;
+    }
+
+    #sb-cart-pvz-map2 {
+        height: 100%;
+    }
+}
+
+.sb-delivery__error a {
+    text-decoration: underline;
+    color: #a94442
+}
+
+.sb-delivery__error a:hover {
+    text-decoration: none;
+}

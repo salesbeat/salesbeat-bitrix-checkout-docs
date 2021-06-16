@@ -1,0 +1,2 @@
+<?php
+$arParams = htmlspecialcharsBack($arParams);

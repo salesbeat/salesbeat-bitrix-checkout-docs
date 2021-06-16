@@ -1,0 +1,12 @@
+<?php
+$MESS['SB_DELIVERY_VER2_ERROR_NOT_PARENT'] = 'this->parent не является родителем';
+$MESS['SB_DELIVERY_VER2_PROFILE_TITLE'] = 'Salesbeat без виджета';
+$MESS['SB_DELIVERY_VER2_CONFIG_MAIN_TITLE'] = 'Настройки';
+$MESS['SB_DELIVERY_VER2_CONFIG_MAIN_DESCRIPTION'] = 'Настройки';
+$MESS['SB_DELIVERY_VER2_CONFIG_MAIN_METHOD_NAME_NAME'] = 'SB название метода';
+$MESS['SB_DELIVERY_VER2_CONFIG_MAIN_METHOD_ID_NAME'] = 'SB id метода';
+$MESS['SB_DELIVERY_VER2_CONFIG_MAIN_METHOD_TYPE_NAME'] = 'SB тип метода';
+$MESS['SB_DELIVERY_VER2_NULL_DEYS'] = 'Не известно';
+$MESS['SB_DELIVERY_VER2_DESC_PVZ_BUTTON_1'] = 'Укажите пункт самовывоза';
+$MESS['SB_DELIVERY_VER2_DESC_PVZ_BUTTON_2'] = 'Изменить пункт самовывоза';
+?>

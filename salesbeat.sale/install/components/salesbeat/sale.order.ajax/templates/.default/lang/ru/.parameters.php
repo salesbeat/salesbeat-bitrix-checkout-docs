@@ -1,0 +1,4 @@
+<?php
+$MESS['SB_DOA_PARAMS_TEMPLATE_NAME_DEFAULT'] = 'Шаблон по умолчанию';
+$MESS['SB_DOA_PARAMS_DISPLAY_VALUE_NAME'] = '';
+?>

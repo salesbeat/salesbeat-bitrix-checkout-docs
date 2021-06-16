@@ -1,0 +1,3 @@
+<?php
+$MESS['SB_DAOW_PARAMS_DISPLAY_VALUE_NAME'] = '';
+?>

@@ -1,0 +1,14 @@
+#bx-soa-delivery .bx-soa-pp {
+    display: none !important;
+}
+
+#bx-soa-delivery ul.bx-soa-pp-list {
+    width: 100%;
+    padding: 0 40px;
+}
+
+.wdel2-inner {
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}

@@ -1,0 +1,7 @@
+.basket-line-block {
+    cursor: pointer;
+}
+
+.basket-line a {
+    text-decoration: underline;
+}

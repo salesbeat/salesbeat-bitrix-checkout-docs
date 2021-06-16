@@ -1,0 +1,102 @@
+.sb-ui-location {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.sb-ui-location.active {
+    z-index: 200;
+}
+
+.sb-ui-location.active .sb-ui-location__variants:not(:empty) {
+    display: block;
+}
+
+.sb-ui-location__search {
+    position: relative;
+}
+
+.sb-ui-location__search-icon {
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    background-image: url('../../images/lens.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 16px;
+    height: 16px;
+    z-index: 20;
+}
+
+.sb-ui-location__search-input {
+    position: relative;
+    width: 100%;
+    padding-left: 25px !important;
+    z-index: 10;
+}
+
+.sb-ui-location__search-clear {
+    position: absolute;
+    display: block;
+    top: 8px;
+    right: 5px;
+    background: url('/bitrix/panel/main/images/bx-admin-sprite-small.png');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: 0 -3392px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.sb-ui-location__variants {
+    position: absolute;
+    background-color: #fff;
+    display: none;
+    width: 100%;
+    top: 35px;
+    left: 0;
+    border: 1px solid;
+    border-color: #CCD5DB;
+    border-radius: 2px;
+    padding: 5px 5px 3px 5px;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.sb-ui-location__variants-item {
+    cursor: pointer;
+    padding: 10px 10px;
+}
+
+.sb-ui-location__variants-item:hover {
+    background-color: #E0E8EA;
+}
+
+.sb-ui-location__variants-error {
+    position: relative;
+    color: #ff2222;
+    padding: 10px 10px;
+}
+
+.sb-ui-location--admin {
+    position: relative;
+}
+
+.sb-ui-location--admin .sb-ui-location__search-input {
+    width: calc(100% - 32px);
+}
+
+.sb-ui-location--admin .sb-ui-location__search-icon,
+.sb-ui-location--admin .sb-ui-location__search-clear {
+    top: 5px;
+}
+
+.sb-ui-location--admin .sb-ui-location__variants {
+    width: calc(100% - 11px);
+    top: 30px;
+    border-color: #87919c #959ea9 #9ea7b1 #959ea9;
+    border-radius: 4px;
+}
