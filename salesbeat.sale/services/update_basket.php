@@ -18,55 +18,54 @@ if (empty(Loader::includeModule('salesbeat.sale'))) return;
 
 global $APPLICATION;
 
+$params = [];
+
+$request = Main\Application::getInstance()->getContext()->getRequest();
+if (!empty($request->getPostList()->getValues())) {
+    $params = $request->getPostList()->getValues();
+} else {
+    $params = Json::decode(file_get_contents('php://input'));
+}
+
 try {
-    $params = [];
+    if (empty($params['cart_id']))
+        throw new Exception('Заполните cart_id');
 
-    $request = Main\Application::getInstance()->getContext()->getRequest();
-    if (!empty($request->getPostList()->getValues())) {
-        $params = $request->getPostList()->getValues();
-    } else {
-        $params = Json::decode(file_get_contents('php://input'));
-    }
+    if (empty($params['product_id']))
+        throw new Exception('Заполните product_id');
 
-    if (empty($params))
-        throw new Exception('Укажите параметры');
+    if (empty($params['quantity']))
+        throw new Exception('Заполните quantity');
 
-    if (isset($params['shop_cart_id'])) $params['shop_cart_id'] = (string)$params['shop_cart_id'];
-    if (isset($params['shop_cart_id'])) $params['shop_cart_id'] = (string)$params['shop_cart_id'];
-    if (isset($params['quantity'])) $params['quantity'] = (int)$params['quantity'];
+    $basket = Sale\Basket::loadItemsForFUser((string)$params['cart_id'], (string)Context::getCurrent()->getSite());
+    $basketItems = $basket->getBasketItems();
+    foreach ($basketItems as $key => $basketItem) {
+        if ($basketItem->getField('PRODUCT_ID') !== $params['product_id']) continue;
 
-    if (!empty($params['shop_cart_id'])) {
-        $siteId = Context::getCurrent()->getSite();
-        $basket = Sale\Basket::loadItemsForFUser((string)$params['shop_cart_id'], (string)$siteId);
-
-        $basketItems = $basket->getBasketItems();
-        foreach ($basketItems as $key => $basketItem) {
-            $productId = $basketItem->getField('ID');
-            if ($basketItem->getField('PRODUCT_ID') !== $params['product_id']) continue;
-
+        if (!empty($params['quantity'] > 0)) {
             $basketItem->setField('QUANTITY', $params['quantity']);
+        } else {
+            $basket->deleteItem($key);
         }
-
-        $basket->save();
-
-        // echo '<pre>', print_r(get_class_methods($basket)), '</pre>';
-    } else {
-        throw new Exception('Укажите параметр: shop_cart_id');
     }
+    $basket->save();
 
-    $result = ['data' => true];
+    $result = [
+        'status' => 200,
+        'data' => true
+    ];
 } catch (Exception $e) {
     $result = [
+        'status' => 400,
         'error' => $e->getMessage()
     ];
 }
 
-/** @noinspection PhpVariableNamingConventionInspection */
-//global $APPLICATION;
-//$APPLICATION->restartBuffer();
-//header('Content-Type:application/json; charset=UTF-8');
-
+global $APPLICATION;
+$APPLICATION->restartBuffer();
+http_response_code($result['status']);
+header('Content-Type:application/json; charset=UTF-8');
 echo Json::encode($result, JSON_UNESCAPED_UNICODE);
 
-//\CMain::FinalActions();
-//die();
+\CMain::FinalActions();
+die();

@@ -29,8 +29,9 @@ $this->addExternalJS($templateFolder . '/script.js');
             ajaxPath: '<?= $componentPath ?>/ajax.php',
             isAjax: '<?= ($arParams['AJAX'] && $arParams['AJAX'] === 'Y') ?>',
             templateName: '<?= $templateName ?>',
-            token: '<?= $arParams['token'] ?>',
-            cart_id: '<?= $arResult['sb_cart_id'] ?>'
+            cart_id: '<?= $arResult['cart_id'] ?>',
+            sb_cart_id: '<?= $arResult['sb_cart_id'] ?>',
+            token: '<?= $arParams['token'] ?>'
         }));
     } else {
         BX.ready(BX.Salesbeat.SaleBasketSmall.init({
@@ -38,8 +39,9 @@ $this->addExternalJS($templateFolder . '/script.js');
             ajaxPath: '<?= $componentPath ?>/ajax.php',
             isAjax: '<?= ($arParams['AJAX'] && $arParams['AJAX'] === 'Y') ?>',
             templateName: '<?= $templateName ?>',
-            token: '<?= $arParams['token'] ?>',
-            cart_id: '<?= $arResult['sb_cart_id'] ?>'
+            cart_id: '<?= $arResult['cart_id'] ?>',
+            sb_cart_id: '<?= $arResult['sb_cart_id'] ?>',
+            token: '<?= $arParams['token'] ?>'
         }));
     }
 </script>

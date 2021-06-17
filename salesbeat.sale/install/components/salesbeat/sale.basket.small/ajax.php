@@ -11,19 +11,19 @@ if (!isset($_POST['templateName']) || !is_string($_POST['templateName']))
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' ||
     preg_match('/^[A-Za-z0-9_]{2}$/', $_POST['siteId']) !== 1 ||
     preg_match('/^[.A-Za-z0-9_-]+$/', $_POST['templateName']) !== 1)
-    die;
+    die();
 
 define('SITE_ID', $_POST['siteId']);
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php';
 
-global $APPLICATION;
-
-if (!check_bitrix_sessid()) die;
+if (!check_bitrix_sessid()) die();
 
 $_POST['arParams']['AJAX'] = 'Y';
 
+global $APPLICATION;
 $APPLICATION->RestartBuffer();
 header('Content-Type: text/html; charset=' . LANG_CHARSET);
+
 $APPLICATION->IncludeComponent(
     'salesbeat:sale.basket.small',
     $_POST['templateName'],

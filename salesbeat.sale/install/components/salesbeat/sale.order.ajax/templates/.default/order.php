@@ -14,14 +14,16 @@ use \Bitrix\Main\Localization\Loc;
     if (typeof window.frameCacheVars !== 'undefined') {
         BX.addCustomEvent('onFrameDataReceived', BX.Salesbeat.SaleOrderAjax.init({
             type: 'checkout',
-            token: '<?= $arParams['token'] ?>',
-            cart_id: '<?= $arResult['sb_cart_id'] ?>'
+            cart_id: '<?= $arResult['cart_id'] ?>',
+            sb_cart_id: '<?= $arResult['sb_cart_id'] ?>',
+            token: '<?= $arParams['token'] ?>'
         }));
     } else {
         BX.ready(BX.Salesbeat.SaleOrderAjax.init({
             type: 'checkout',
-            token: '<?= $arParams['token'] ?>',
-            cart_id: '<?= $arResult['sb_cart_id'] ?>'
+            cart_id: '<?= $arResult['cart_id'] ?>',
+            sb_cart_id: '<?= $arResult['sb_cart_id'] ?>',
+            token: '<?= $arParams['token'] ?>'
         }));
     }
 </script>

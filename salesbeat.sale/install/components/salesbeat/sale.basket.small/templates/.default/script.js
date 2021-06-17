@@ -1,10 +1,29 @@
 BX.namespace('BX.Salesbeat');
 
+window.timerUpdateBasket = {};
+
 BX.Salesbeat.SaleBasketSmall = {
     init: function (params) {
         this.params = params;
 
-        this.client = new window.Salesbeat(this.params.cart_id, this.params.token);
+        this.client = new window.Salesbeat(
+            this.params.sb_cart_id,
+            this.params.token,
+            {
+                onUpdateQuantity: ({ id, quantity }) => {
+                    clearTimeout(window.timerUpdateBasket[id]);
+                    window.timerUpdateBasket[id] = setTimeout(() => {
+                        BX.ajax({
+                            url: '/bitrix/services/salesbeat.sale/update_basket.php',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: { cart_id: params.cart_id, product_id: id, quantity: quantity },
+                            onsuccess: BX.onCustomEvent('OnBasketChange')
+                        });
+                    }, 700);
+                }
+            }
+        );
 
         this.events();
         this.bindEvents();
@@ -40,6 +59,7 @@ BX.Salesbeat.SaleBasketSmall = {
         data.siteId = this.params.siteId;
         data.templateName = this.params.templateName;
         data.cart_id = this.params.cart_id;
+        data.sb_cart_id = this.params.sb_cart_id;
         data.token = this.params.token;
 
         BX.ajax({
@@ -47,7 +67,7 @@ BX.Salesbeat.SaleBasketSmall = {
             method: 'POST',
             dataType: 'html',
             data: data,
-            onsuccess: this.setCartBody
+            onsuccess: BX.Salesbeat.SaleBasketSmall.setCartBody
         });
     },
 
