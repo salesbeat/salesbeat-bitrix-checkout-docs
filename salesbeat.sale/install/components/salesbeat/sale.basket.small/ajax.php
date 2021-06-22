@@ -19,6 +19,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_be
 if (!check_bitrix_sessid()) die();
 
 $_POST['arParams']['AJAX'] = 'Y';
+$_POST['arParams']['ACTION'] = $_POST['action'];
 
 global $APPLICATION;
 $APPLICATION->RestartBuffer();

@@ -15,8 +15,9 @@ use \Salesbeat\Sale\Tools;
 
 class SbSaleBasketSmall extends CBitrixComponent
 {
-    protected $fUserId;
-    protected $siteId;
+    protected $fUserId = null;
+    protected $user = [];
+    protected $siteId = null;
 
     protected $basket = null;
     protected $basketItems = [];
@@ -62,7 +63,8 @@ class SbSaleBasketSmall extends CBitrixComponent
             $measureRatio = null;
         }
 
-        $this->updateSbCart();
+        if (!isset($this->arParams['ACTION']) || $this->arParams['ACTION'] !== 'no-update-sb-basket')
+            $this->updateSbCart();
 
         if (!empty($this->basketItems)) {
             $this->arResult = [
@@ -91,6 +93,27 @@ class SbSaleBasketSmall extends CBitrixComponent
             $this->fUserId = Sale\Fuser::getId();
 
         return $this->fUserId;
+    }
+
+    protected function getUser(): array
+    {
+        global $USER;
+
+        if (empty($this->user) && !empty($USER->GetParam('USER_ID'))) {
+            $userTable = new Main\UserTable;
+            $user = $userTable->getById($USER->GetParam('USER_ID'))->Fetch();
+
+            $this->user = [
+                'shop_client_id' => $user['ID'],
+                'first_name' => $user['NAME'],
+                'last_name' => $user['LAST_NAME'],
+                'middle_name' => $user['SECOND_NAME'],
+                'phone' => $user['PERSONAL_PHONE'],
+                'email' => $user['EMAIL']
+            ];
+        }
+
+        return $this->user;
     }
 
     public function getSiteId()
@@ -304,7 +327,7 @@ class SbSaleBasketSmall extends CBitrixComponent
                 'shop_cart_id' => $this->fUserId,
                 'products' => array_values($this->basketItems)
             ],
-            'customer_info' => []
+            'customer_info' => $this->getUser()
         ];
 
         return Api::createCart(
@@ -320,7 +343,7 @@ class SbSaleBasketSmall extends CBitrixComponent
                 'shop_cart_id' => $this->fUserId,
                 'products' => array_values($this->basketItems)
             ],
-            'customer_info' => []
+            'customer_info' => $this->getUser()
         ];
 
         return Api::updateCart(

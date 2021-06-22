@@ -18,7 +18,7 @@ BX.Salesbeat.SaleBasketSmall = {
                             method: 'POST',
                             dataType: 'json',
                             data: { cart_id: params.cart_id, product_id: id, quantity: quantity },
-                            onsuccess: BX.onCustomEvent('OnBasketChange')
+                            onsuccess: BX.onCustomEvent('OnBasketChange', ['no-update-sb-basket'])
                         });
                     }, 700);
                 }
