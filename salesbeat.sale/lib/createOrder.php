@@ -28,7 +28,7 @@ class CreateOrder
     {
         $this->order = Sale\Order::create(
             $this->siteId,
-            !empty($data['user_id']) ? $data['user_id'] : \CSaleUser::GetAnonymousUserID()
+            !empty($data['customer_id']) ? $data['customer_id'] : \CSaleUser::GetAnonymousUserID()
         );
         $this->order->setPersonTypeId(1);
 
@@ -192,7 +192,7 @@ class CreateOrder
                 $property->setValue($data['phone']);
 
             // Устанавливаем регион
-            if ($arProperty['CODE'] == 'SB_LOCATION') {
+            if ($arProperty['CODE'] === 'SB_LOCATION') {
                 $property->setValue(City::transformCityName($storage));
                 continue;
             }

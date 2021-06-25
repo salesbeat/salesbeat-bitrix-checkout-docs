@@ -200,7 +200,6 @@ class SbSaleBasketSmall extends CBitrixComponent
     {
         $elementsSelect = ['IBLOCK_ID', 'ID', 'NAME', 'PREVIEW_PICTURE', 'DETAIL_PICTURE', 'PROPERTY_CML2_LINK'];
 
-        $iBlockId = $this->offersId ? $this->offersId : $this->catalogId;
         $propertyList = unserialize(Option::get($this->moduleId, 'order_properties'));
         if (!empty($propertyList)) {
             foreach ($propertyList as $value) $elementsSelect[] = 'PROPERTY_' . $value;
@@ -208,7 +207,7 @@ class SbSaleBasketSmall extends CBitrixComponent
 
         $rsElements = CIBlockElement::GetList(
             [],
-            ['IBLOCK_ID' => $iBlockId, '=ID' => $this->getProductsId()],
+            ['IBLOCK_ID' => [$this->catalogId, $this->offersId], '=ID' => $this->getProductsId()],
             false,
             false,
             $elementsSelect

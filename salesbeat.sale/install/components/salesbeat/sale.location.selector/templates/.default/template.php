@@ -2,6 +2,15 @@
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
 use \Bitrix\Main\Localization\Loc;
+
+/**
+ * @global string $componentPath
+ * @global string $templateName
+ * @var string $templateFolder
+ * @var array $arParams
+ * @var array $arResult
+ * @var $APPLICATION CMain
+ */
 ?>
 <div id="<?= $arParams['main_div_id'] ?>" class="sb-ui-location<?= !empty($arResult['MODE_CLASSES']) ? $arResult['MODE_CLASSES'] : '' ?>" data-sb-location>
     <input type="text" style="display: none" name="<?= $arParams['INPUT_NAME'] ?>"

@@ -43,10 +43,10 @@ if ($request->getRequestMethod() == 'POST' && check_bitrix_sessid()) {
         ]);
     }
 
-    Option::set($moduleId, 'default_width', $request->getPost('default_width') ?: 0);
-    Option::set($moduleId, 'default_height', $request->getPost('default_height') ?: 0);
-    Option::set($moduleId, 'default_length', $request->getPost('default_length') ?: 0);
-    Option::set($moduleId, 'default_weight', $request->getPost('default_weight') ?: 0);
+    Option::set($moduleId, 'default_width', (int)$request->getPost('default_width'));
+    Option::set($moduleId, 'default_height', (int)$request->getPost('default_height'));
+    Option::set($moduleId, 'default_length', (int)$request->getPost('default_length'));
+    Option::set($moduleId, 'default_weight', (int)$request->getPost('default_weight'));
 
     Option::set($moduleId, 'pay_systems_cash', serialize($request->getPost('pay_systems_cash')));
     Option::set($moduleId, 'pay_systems_card', serialize($request->getPost('pay_systems_card')));
@@ -60,7 +60,7 @@ if ($request->getRequestMethod() == 'POST' && check_bitrix_sessid()) {
     Option::set($moduleId, 'recipient_phone', $request->getPost('recipient_phone'));
     Option::set($moduleId, 'recipient_email', $request->getPost('recipient_email'));
 
-    Option::set($moduleId, 'order_ab_test', $request->getPost('order_ab_test') ? (int)$request->getPost('order_ab_test') : 100);
+    Option::set($moduleId, 'order_ab_test', (int)$request->getPost('order_ab_test'));
     Option::set($moduleId, 'order_catalog', $request->getPost('order_catalog'));
     Option::set($moduleId, 'order_offers', $request->getPost('order_offers'));
     Option::set($moduleId, 'order_properties', serialize($request->getPost('order_properties')));

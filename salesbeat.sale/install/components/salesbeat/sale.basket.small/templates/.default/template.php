@@ -12,8 +12,12 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
 $this->addExternalJS('//cdn.to.digital/checkout-sdk.js');
 
-$this->addExternalCss($templateFolder . '/style.css');
-$this->addExternalJS($templateFolder . '/script.js');
+/**
+ * Используйте, если будете подключать компонент в шаблоне другого компонента
+ * echo '<script type="text/javascript" src="//cdn.to.digital/checkout-sdk.js"></script>';
+ * echo '<link rel="stylesheet" href="' . $templateFolder . '/style.js">';
+ * echo '<script type="text/javascript" src="' . $templateFolder . '/script.js"></script>';
+ */
 ?>
 <div class="basket-line" data-sb-basket>
     <div class="basket-line-block" data-sb-order>

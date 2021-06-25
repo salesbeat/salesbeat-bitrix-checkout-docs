@@ -129,7 +129,7 @@ class SaleOrderEdit
                 $property->setValue('');
 
             // Устанавливаем регион
-            if ($arProperty['CODE'] == 'SB_LOCATION') {
+            if ($arProperty['CODE'] === 'SB_LOCATION') {
                 $property->setValue(City::transformCityName($storage));
                 continue;
             }

@@ -246,7 +246,7 @@ class Handler
                 $property['VALUE'] = [''];
 
             // Устанавливаем регион
-            if ($property['CODE'] == 'SB_LOCATION') {
+            if ($property['CODE'] === 'SB_LOCATION') {
                 $property['VALUE'] = [City::transformCityName($storage)];
                 continue;
             }

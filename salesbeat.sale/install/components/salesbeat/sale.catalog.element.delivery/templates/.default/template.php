@@ -12,8 +12,12 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
 $this->addExternalJS('//app.salesbeat.pro/static/widget/js/widget.js');
 
-$this->addExternalCss($templateFolder . '/style.css');
-$this->addExternalJS($templateFolder . '/script.js');
+/**
+ * Используйте, если будете подключать компонент в шаблоне другого компонента
+ * echo '<script type="text/javascript" src="//app.salesbeat.pro/static/widget/js/widget.js"></script>';
+ * echo '<link rel="stylesheet" href="' . $templateFolder . '/style.js">';
+ * echo '<script type="text/javascript" src="' . $templateFolder . '/script.js"></script>';
+ */
 ?>
 <div id="<?= $arParams['main_div_id'] ?>" class="salesbeat-deliveries"></div>
 

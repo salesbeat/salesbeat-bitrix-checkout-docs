@@ -30,9 +30,6 @@ try {
     if (empty($params))
         throw new Exception('Укажите параметры');
 
-    $params['delivery']['delivery_id'] = 5;
-    $params['payment']['payment_id'] = 1;
-
     $order = new CreateOrder();
     $orderId = $order->create($params);
 

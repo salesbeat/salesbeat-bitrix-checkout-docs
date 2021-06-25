@@ -104,7 +104,7 @@ class SbSaleDeliveryWidget extends CBitrixComponent
                 foreach ($arSbProps as $arSbProp) {
                     if (in_array($arSbProp['CODE'], $fields))
                         $arProperties[] = $arSbProp['ID'];
-                    if ($arSbProp['CODE'] == 'SB_LOCATION' &&
+                    if ($arSbProp['CODE'] === 'SB_LOCATION' &&
                         !in_array($arSbProp['ID'], $locationProperties))
                         $locationProperties[] = $arSbProp['ID'];
                 }

@@ -12,8 +12,12 @@ use \Bitrix\Main\Localization\Loc;
  */
 $this->addExternalJS('//cdn.to.digital/checkout-sdk.js');
 
-$this->addExternalCss($templateFolder . '/stale.css');
-$this->addExternalJS($templateFolder . '/script.js');
+/**
+ * Используйте, если будете подключать компонент в шаблоне другого компонента
+ * echo '<script type="text/javascript" src="//cdn.to.digital/checkout-sdk.js"></script>';
+ * echo '<link rel="stylesheet" href="' . $templateFolder . '/style.js">';
+ * echo '<script type="text/javascript" src="' . $templateFolder . '/script.js"></script>';
+ */
 
 $context = Main\Application::getInstance()->getContext();
 $request = $context->getRequest();
