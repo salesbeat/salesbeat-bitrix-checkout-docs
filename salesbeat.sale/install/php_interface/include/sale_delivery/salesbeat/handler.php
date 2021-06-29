@@ -102,7 +102,7 @@ class SalesbeatHandler extends Sale\Delivery\Services\Base
         $storage = Storage::getInstance()->getByID((int)$this->id);
 
         $result = new Sale\Delivery\CalculationResult();
-        $result->setDescription($this->getDescriptionDelivery());
+        $result->setDescription($this->getDescriptionDelivery($storage));
         $result->setDeliveryPrice(roundEx(!empty($storage['DELIVERY_PRICE']) ? $storage['DELIVERY_PRICE'] : 0, SALE_VALUE_PRECISION));
         $result->setPeriodDescription(!empty($storage['DELIVERY_DAYS']) ? $storage['DELIVERY_DAYS'] : Loc::getMessage('SB_DELIVERY_VER1_NULL_DEYS'));
 
@@ -111,25 +111,22 @@ class SalesbeatHandler extends Sale\Delivery\Services\Base
 
     /**
      * Отображаем в описании доставки данные расчетов
+     * @param array $storage
      * @return string
      */
-    private function getDescriptionDelivery(): string
+    private function getDescriptionDelivery(array $storage): string
     {
         $result = '';
-
-        if (!Loader::includeModule('salesbeat.sale'))
-            return $result;
-
-        $storage = Storage::getInstance()->getByID((int)$this->id);
         $sbPropertyList = Internals::getSbPropertyList();
 
         if (empty($storage)) return $result;
         if (empty($sbPropertyList)) return $result;
 
         // Выводим кнопку
-        $descButton = !empty($arStorage['DELIVERY_PRICE']) ?
+        $descButton = isset($storage['DELIVERY_PRICE']) ?
             Loc::getMessage('SB_DELIVERY_VER1_DESC_BUTTON_2') :
             Loc::getMessage('SB_DELIVERY_VER1_DESC_BUTTON_1');
+
         $result = '<a href="#" id="sb_widget" class="btn btn-default" data-city-code="' . City::getCity()['ID'] . '">' . $descButton . '</a>';
 
         $result .= '<ul class="bx-soa-pp-list">';

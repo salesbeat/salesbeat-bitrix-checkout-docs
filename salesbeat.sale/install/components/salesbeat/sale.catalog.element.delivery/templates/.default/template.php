@@ -15,7 +15,7 @@ $this->addExternalJS('//app.salesbeat.pro/static/widget/js/widget.js');
 /**
  * Используйте, если будете подключать компонент в шаблоне другого компонента
  * echo '<script type="text/javascript" src="//app.salesbeat.pro/static/widget/js/widget.js"></script>';
- * echo '<link rel="stylesheet" href="' . $templateFolder . '/style.js">';
+ * echo '<link rel="stylesheet" href="' . $templateFolder . '/style.css">';
  * echo '<script type="text/javascript" src="' . $templateFolder . '/script.js"></script>';
  */
 ?>
@@ -23,7 +23,7 @@ $this->addExternalJS('//app.salesbeat.pro/static/widget/js/widget.js');
 
 <script>
     if (typeof window.frameCacheVars !== 'undefined') {
-        BX.addCustomEvent('onFrameDataReceived', BX.Salesbeat.SaleBasketSmall.init({
+        BX.addCustomEvent('onFrameDataReceived', BX.Salesbeat.CatalogElementDelivery.init({
             token: '<?= $arParams['token'] ?>',
             price_to_pay: '<?= $arParams['price_to_pay'] ?>',
             price_insurance: '<?= $arParams['price_insurance'] ?>',
@@ -31,13 +31,13 @@ $this->addExternalJS('//app.salesbeat.pro/static/widget/js/widget.js');
             x: '<?= $arParams['x'] ?>',
             y: '<?= $arParams['y'] ?>',
             z: '<?= $arParams['z'] ?>',
-            quantity: quantity || '<?= $arParams['quantity'] ?>',
+            quantity: '<?= $arParams['quantity'] ?>',
             city_by: '<?= $arParams['city_code'] ?>',
             params_by: '<?= $arParams['params_by'] ?>',
             main_div_id: '<?= $arParams['main_div_id'] ?>',
         }));
     } else {
-        BX.ready(BX.Salesbeat.SaleBasketSmall.init({
+        BX.ready(BX.Salesbeat.CatalogElementDelivery.init({
             token: '<?= $arParams['token'] ?>',
             price_to_pay: '<?= $arParams['price_to_pay'] ?>',
             price_insurance: '<?= $arParams['price_insurance'] ?>',
@@ -45,7 +45,7 @@ $this->addExternalJS('//app.salesbeat.pro/static/widget/js/widget.js');
             x: '<?= $arParams['x'] ?>',
             y: '<?= $arParams['y'] ?>',
             z: '<?= $arParams['z'] ?>',
-            quantity: quantity || '<?= $arParams['quantity'] ?>',
+            quantity: '<?= $arParams['quantity'] ?>',
             city_by: '<?= $arParams['city_code'] ?>',
             params_by: '<?= $arParams['params_by'] ?>',
             main_div_id: '<?= $arParams['main_div_id'] ?>',

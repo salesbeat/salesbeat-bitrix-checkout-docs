@@ -15,7 +15,7 @@ $this->addExternalJS('//cdn.to.digital/checkout-sdk.js');
 /**
  * Используйте, если будете подключать компонент в шаблоне другого компонента
  * echo '<script type="text/javascript" src="//cdn.to.digital/checkout-sdk.js"></script>';
- * echo '<link rel="stylesheet" href="' . $templateFolder . '/style.js">';
+ * echo '<link rel="stylesheet" href="' . $templateFolder . '/style.css">';
  * echo '<script type="text/javascript" src="' . $templateFolder . '/script.js"></script>';
  */
 ?>

@@ -41,7 +41,7 @@ class Handler
     /**
      * Step: 1
      * Вызывается после получения всех свойств заказа (из значений по умолчанию, из профиля или уже заполненных клиентом)
-     * @param array arUserResult Массив содержащий текущие выбранные пользовательские данные
+     * @param array $arUserResult Массив содержащий текущие выбранные пользовательские данные
      * @param object $request Объект \Bitrix\Main\HttpRequest
      * @param array $arParams Объект Массив параметров компонента
      * @param array $arResult Массив компонента
@@ -49,22 +49,20 @@ class Handler
     public static function OnSaleComponentOrderProperties(&$arUserResult, $request, &$arParams, &$arResult)
     {
         $locationPropId = Internals::getPropertyIdByCode((int)$arUserResult['PERSON_TYPE_ID'], 'SB_LOCATION');
-
         if (!empty($locationPropId)) {
             $storage = Storage::getInstance()->getByID((int)$arUserResult['DELIVERY_ID']);
 
-            $currentCity = '';
             if (!empty($storage['CITY_CODE'])) {
-                $currentCity = City::transformCityName($storage);
-                $arUserResult['ORDER_PROP'][$locationPropId] = $currentCity;
-
-                City::setCity($currentCity);
+                $deliveryCity = City::transformCityName($storage);
+                $arUserResult['ORDER_PROP'][$locationPropId] = $deliveryCity;
+                City::setCity($deliveryCity);
             }
 
-            $propertyCity = $arUserResult['ORDER_PROP'][$locationPropId];
-            if ($currentCity !== $propertyCity) {
-                Storage::getInstance()->delete();
-                City::setCity($propertyCity);
+            if ($storage = Storage::getInstance()->getList()) {
+                foreach ($storage as $delivery) {
+                    if ($delivery['CITY_CODE'] !== City::getCity()['ID'])
+                        Storage::getInstance()->deleteById((int)$delivery['DELIVERY_ID']);
+                }
             }
         }
     }
@@ -112,23 +110,17 @@ class Handler
 
             // Удаляем недоступные способы доставки
             foreach ($arDeliveryServiceAll as $key => $deliveryService) {
-                $flag = false;
-
                 $deliveryServiceConfig = Tools::accessProtected($deliveryService, 'config');
                 if (in_array($deliveryServiceConfig['MAIN']['METHOD_TYPE'], ['courier', 'post'])) {
-                    foreach ($deliveryMethods as $deliveryMethod) {
-                        $flag = $deliveryServiceConfig['MAIN']['METHOD_ID'] == $deliveryMethod['id'];
-                        if ($flag) break;
-                    }
-
-                    if (!$flag) unset($arDeliveryServiceAll[$key]);
+                    if (!in_array(
+                        $deliveryServiceConfig['MAIN']['METHOD_ID'],
+                        array_column($deliveryMethods, 'id')
+                    )) unset($arDeliveryServiceAll[$key]);
                 } elseif ($deliveryServiceConfig['MAIN']['METHOD_TYPE'] == 'pvz') {
-                    foreach ($deliveryMethods as $deliveryMethod) {
-                        $flag = $deliveryMethod['type'] == 'pvz';
-                        if ($flag) break;
-                    }
-
-                    if (!$flag) unset($arDeliveryServiceAll[$key]);
+                    if (!in_array(
+                        'pvz',
+                        array_column($deliveryMethods, 'type')
+                    )) unset($arDeliveryServiceAll[$key]);
                 }
             }
             unset($key, $deliveryService, $deliveryMethod, $flag);

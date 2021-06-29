@@ -100,6 +100,8 @@ class Basket
             $basket['weight'] += $basketItem['weight'] * $basketItem['quantity'];
         }
 
-        return array_merge($basket, Api::packer('', $basketItemList));
+        $resPucker['data'] = [];
+        // $resPucker = Api::packer('', $basketItemList);
+        return array_merge($basket, $resPucker['data']);
     }
 }

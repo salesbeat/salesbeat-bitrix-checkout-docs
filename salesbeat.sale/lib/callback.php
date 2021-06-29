@@ -12,6 +12,9 @@ class Callback
         if (isset($arData['delivery_method_type']) && in_array($arData['delivery_method_type'], ['courier', 'post']))
             $arData = self::saveCalc($arData);
 
+
+        $arData['city_code'] = City::getCity()['ID'];
+
         $arData = Tools::utfDecode($arData); // Fix windows-1251
         Storage::getInstance()->set((int)$arData['delivery_id'], $arData);
     }

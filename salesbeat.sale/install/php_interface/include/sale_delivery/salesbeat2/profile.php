@@ -8,8 +8,10 @@ use \Bitrix\Main\SystemException;
 use \Bitrix\Main\ArgumentTypeException;
 use \Bitrix\Main\ArgumentNullException;
 use \Bitrix\Sale;
-use \Salesbeat\Sale\Storage;
-use \Salesbeat\Sale\Callback;
+use Salesbeat\Sale\City;
+use Salesbeat\Sale\Storage;
+use Salesbeat\Sale\Internals;
+use Salesbeat\Sale\Callback;
 
 Loc::loadMessages(__FILE__);
 
@@ -178,8 +180,47 @@ class Salesbeat2Profile extends Sale\Delivery\Services\Base
         $storage = Storage::getInstance()->getByID((int)$this->id);
 
         $result = new Sale\Delivery\CalculationResult();
+
+        if ($this->methodId === 'pvz')
+            $result->setDescription($this->getDescriptionDelivery($storage));
+
         $result->setDeliveryPrice(roundEx(!empty($storage['DELIVERY_PRICE']) ? $storage['DELIVERY_PRICE'] : 0, SALE_VALUE_PRECISION));
         $result->setPeriodDescription(!empty($storage['DELIVERY_DAYS']) ? $storage['DELIVERY_DAYS'] : Loc::getMessage('SB_DELIVERY_VER2_NULL_DEYS'));
+
+        return $result;
+    }
+
+    /**
+     * Отображаем в описании доставки данные расчетов
+     * @param array $storage
+     * @return string
+     */
+    private function getDescriptionDelivery(array $storage): string
+    {
+        $result = '';
+        $sbPropertyList = Internals::getSbPropertyList();
+
+        if (empty($storage)) return $result;
+        if (empty($sbPropertyList)) return $result;
+
+        // Выводим кнопку
+        $descButton = isset($storage['DELIVERY_PRICE']) ?
+            Loc::getMessage('SB_DELIVERY_VER2_DESC_PVZ_BUTTON_2') :
+            Loc::getMessage('SB_DELIVERY_VER2_DESC_PVZ_BUTTON_1');
+
+        $result = '<a href="#" id="sb_pvz" class="btn btn-default" data-city-code="' . City::getCity()['ID'] . '">' . $descButton . '</a>';
+
+        $result .= '<ul class="bx-soa-pp-list">';
+        foreach ($sbPropertyList as $key => $property) {
+            if (in_array($key, ['CITY_CODE', 'PVZ_ID', 'DELIVERY_METHOD_ID'])) continue;
+
+            if (!empty($storage[$key]))
+                $result .= '<li>
+    <div class="bx-soa-pp-list-termin">' . $property['NAME'] . ':</div>
+    <div class="bx-soa-pp-list-description">' . $storage[$key] . '</div>
+</li>';
+        }
+        $result .= '</ul>';
 
         return $result;
     }

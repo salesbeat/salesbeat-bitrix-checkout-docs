@@ -8,9 +8,8 @@ use \Bitrix\Main\Loader;
 
 if (empty(Loader::includeModule('salesbeat.sale'))) return;
 
-$request = Main\Application::getInstance()->getContext()->getRequest();
-
 ob_start();
+$request = Main\Application::getInstance()->getContext()->getRequest();
 $GLOBALS['APPLICATION']->IncludeComponent(
     'salesbeat:sale.location.selector',
     '',
@@ -30,9 +29,9 @@ $result = [
 /** @noinspection PhpVariableNamingConventionInspection */
 global $APPLICATION;
 $APPLICATION->restartBuffer();
-header('Content-Type:application/json; charset=UTF-8');
+header('Content-Type:application/html; charset=UTF-8');
 
-echo Main\Web\Json::encode($result, JSON_UNESCAPED_UNICODE);
+echo $result['data'];
 
 \CMain::FinalActions();
 die();

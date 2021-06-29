@@ -27,7 +27,6 @@ CJSCore::Init(['popup']);
                 }
 
                 BX.Salesbeat.SaleDeliveryWidget.onLoad();
-                BX.Salesbeat.SaleDeliveryWidget.sendOrderRequest();
             },
             onLoad: function () {
                 BX.Salesbeat.SaleDeliveryWidget.checkedDelivery(BX.Sale.OrderAjaxComponent.result.DELIVERY);
@@ -97,15 +96,21 @@ CJSCore::Init(['popup']);
             },
 
             bindModal: function () {
-                $(document).on('click', '#sb_widget, #sb_widget_err', function (e) {
-                    e.preventDefault();
-                    BX.Salesbeat.SaleDeliveryWidget.loadWidget(e);
-                });
+                let widgetButtons = document.querySelectorAll('#sb_widget, #sb_widget_err');
+                for (let button of widgetButtons) {
+                    BX.bind(button, 'click', function (e) {
+                        e.preventDefault();
+                        BX.Salesbeat.SaleDeliveryWidget.loadWidget(e);
+                    });
+                }
 
-                $(document).on('click', '#sb_pvz, #sb_pvz_err', function (e) {
-                    e.preventDefault();
-                    BX.Salesbeat.SaleDeliveryWidget.loadPvzMap(e);
-                });
+                let pvzButtons = document.querySelectorAll('#sb_pvz, #sb_pvz_err');
+                for (let button of pvzButtons) {
+                    BX.bind(button, 'click', function (e) {
+                        e.preventDefault();
+                        BX.Salesbeat.SaleDeliveryWidget.loadPvzMap(e);
+                    });
+                }
             },
             loadPopup: function (modalId, widgetId) {
                 this.obPopupWin = BX.PopupWindowManager.create(modalId, null, {
